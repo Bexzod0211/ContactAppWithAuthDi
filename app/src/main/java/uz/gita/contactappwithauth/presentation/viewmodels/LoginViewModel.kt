@@ -17,6 +17,7 @@ import uz.gita.contactappwithauth.data.source.remote.response.ErrorResponse
 import uz.gita.contactappwithauth.data.source.remote.response.LoginResponse
 import uz.gita.contactappwithauth.domain.AppRepository
 import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.directions.LoginDirection
 import uz.gita.contactappwithauth.presentation.screens.login.LoginScreenDirections
 import uz.gita.contactappwithauth.presentation.screens.register.RegisterScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.LoginUseCase
@@ -25,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val useCase:LoginUseCase,
-    private val appNavigator: AppNavigator
+    private val direction:LoginDirection
 ) : ViewModel() {
 
 //    val openRegisterScreenLiveData = MutableLiveData<Unit>()
@@ -37,7 +38,7 @@ class LoginViewModel @Inject constructor(
     fun btnRegisterClicked() {
 //        openRegisterScreenLiveData.value = Unit
         viewModelScope.launch {
-            appNavigator.navigateTo(LoginScreenDirections.actionLoginScreenToRegisterScreen())
+            direction.openRegisterScreen()
         }
     }
 
@@ -53,7 +54,7 @@ class LoginViewModel @Inject constructor(
         useCase.login(phone, password).onEach {
             it.onSuccess {
 //                openMainScreenLiveData.value = Unit
-                appNavigator.navigateTo(LoginScreenDirections.actionLoginScreenToMainScreen())
+                direction.openMainScreen()
             }
             it.onFailure { e->
                 Log.d("TTT",e.message?:"")

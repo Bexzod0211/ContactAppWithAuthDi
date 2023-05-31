@@ -15,6 +15,7 @@ import uz.gita.contactappwithauth.data.source.remote.request.RegisterRequest
 import uz.gita.contactappwithauth.data.source.remote.response.MessageResponse
 import uz.gita.contactappwithauth.domain.AppRepository
 import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.directions.RegisterDirection
 import uz.gita.contactappwithauth.presentation.screens.register.RegisterScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.RegisterUseCase
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val useCase: RegisterUseCase,
-    private val appNavigator:AppNavigator
+    private val direction:RegisterDirection
 ) : ViewModel() {
     val btnRegisterEnablingStateLiveData = MutableLiveData<Boolean>()
     val toastLiveData = MutableLiveData<String>()
@@ -49,7 +50,7 @@ class RegisterViewModel @Inject constructor(
             it.onSuccess { m->
                 toastLiveData.value = m.message
 //                openVerifyScreenLiveData.value = request.phone
-                appNavigator.navigateTo(RegisterScreenDirections.actionRegisterScreenToVerifyScreen(request.phone))
+                direction.openVerifyScreen(request.phone)
 
             }
             it.onFailure {e->

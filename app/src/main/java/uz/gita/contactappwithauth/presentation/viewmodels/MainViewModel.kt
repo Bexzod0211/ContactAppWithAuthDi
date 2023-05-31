@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,12 +17,14 @@ import uz.gita.contactappwithauth.data.source.remote.request.UpdateContactReques
 import uz.gita.contactappwithauth.data.source.remote.response.ContactResponse
 import uz.gita.contactappwithauth.data.source.remote.response.ErrorResponse
 import uz.gita.contactappwithauth.domain.AppRepository
+import uz.gita.contactappwithauth.presentation.directions.MainDirection
 import uz.gita.contactappwithauth.presentation.usecase.MainUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val useCase: MainUseCase
+    private val useCase: MainUseCase,
+    private val direction:MainDirection
 ) : ViewModel() {
 
     val openAddDialogLiveData = MutableLiveData<Unit>()
@@ -217,6 +220,8 @@ class MainViewModel @Inject constructor(
 
     fun logOut(){
         useCase.saveLoginState(false)
-        logOutLiveData.value = Unit
+        viewModelScope.launch {
+            direction.openLoginScreen()
+        }
     }
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import uz.gita.contactappwithauth.domain.AppRepository
 import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.directions.SplashDirection
 import uz.gita.contactappwithauth.presentation.screens.splash.SplashScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.SplashUseCase
 import uz.gita.contactappwithauth.utils.myLog
@@ -20,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val useCase:SplashUseCase,
-    private val appNavigator:AppNavigator
+    private val direction:SplashDirection
 ) : ViewModel(){
 //
 //    val openMainScreenLiveData = MutableLiveData<Unit>()
@@ -37,11 +38,11 @@ class SplashViewModel @Inject constructor(
                 Log.d("TTT", "it = $$it")
                 if (it) {
 //                openMainScreenLiveData.value = Unit
-                    appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToMainScreen())
+                    direction.openMainScreen()
                 } else {
 //                openLoginScreenLiveData.value = Unit
                     myLog("else")
-                    appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToLoginScreen())
+                    direction.openLoginScreen()
                 }
             }
 

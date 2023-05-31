@@ -27,10 +27,6 @@ class MainScreen : Fragment(R.layout.screen_main) {
     private val binding by viewBinding(ScreenMainBinding::bind)
     @Inject
     lateinit var adapter:ContactAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.logOutLiveData.observe(this,logOutObserver)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -76,7 +72,7 @@ class MainScreen : Fragment(R.layout.screen_main) {
     }
 
     private val progressBarObserver = Observer<Boolean> {
-        if (it == true){
+        if (it){
             binding.progressBar.show()
         }else {
             binding.progressBar.hide()
@@ -145,7 +141,7 @@ class MainScreen : Fragment(R.layout.screen_main) {
             .show()
     }
 
-    private val logOutObserver = Observer<Unit> {
-        findNavController().navigate(R.id.action_mainScreen_to_loginScreen)
-    }
+//    private val logOutObserver = Observer<Unit> {
+//        findNavController().navigate(R.id.action_mainScreen_to_loginScreen)
+//    }
 }
