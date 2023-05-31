@@ -20,8 +20,9 @@ class SplashScreen : Fragment(R.layout.screen_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.openMainScreenLiveData.observe(this,openMainScreenObserver)
-        viewModel.openLoginScreenLiveData.observe(this,openLoginScreenObserver)
+//        viewModel.openMainScreenLiveData.observe(this,openMainScreenObserver)
+//        viewModel.openLoginScreenLiveData.observe(this,openLoginScreenObserver)
+        viewModel.init()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

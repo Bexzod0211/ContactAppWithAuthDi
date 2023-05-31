@@ -27,8 +27,8 @@ class LoginScreen : Fragment(R.layout.screen_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        viewModel.openRegisterScreenLiveData.observe(this, openRegisterScreenObserver)
-        viewModel.openMainScreenLiveData.observe(this, openMainScreenObserver)
+//        viewModel.openRegisterScreenLiveData.observe(this, openRegisterScreenObserver)
+//        viewModel.openMainScreenLiveData.observe(this, openMainScreenObserver)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

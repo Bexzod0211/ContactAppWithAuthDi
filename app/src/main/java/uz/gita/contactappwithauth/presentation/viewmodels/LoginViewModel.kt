@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,22 +16,29 @@ import uz.gita.contactappwithauth.data.source.remote.request.LoginRequest
 import uz.gita.contactappwithauth.data.source.remote.response.ErrorResponse
 import uz.gita.contactappwithauth.data.source.remote.response.LoginResponse
 import uz.gita.contactappwithauth.domain.AppRepository
+import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.screens.login.LoginScreenDirections
+import uz.gita.contactappwithauth.presentation.screens.register.RegisterScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.LoginUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val useCase:LoginUseCase
+    private val useCase:LoginUseCase,
+    private val appNavigator: AppNavigator
 ) : ViewModel() {
 
-    val openRegisterScreenLiveData = MutableLiveData<Unit>()
+//    val openRegisterScreenLiveData = MutableLiveData<Unit>()
+//    val openMainScreenLiveData = MutableLiveData<Unit>()
     val btnLoginEnablingStateLiveData = MutableLiveData<Boolean>()
-    val openMainScreenLiveData = MutableLiveData<Unit>()
     val errorHandleLiveData = MutableLiveData<String>()
     val progressBarLiveData = MutableLiveData<Boolean>()
 
     fun btnRegisterClicked() {
-        openRegisterScreenLiveData.value = Unit
+//        openRegisterScreenLiveData.value = Unit
+        viewModelScope.launch {
+            appNavigator.navigateTo(LoginScreenDirections.actionLoginScreenToRegisterScreen())
+        }
     }
 
 
@@ -44,7 +52,8 @@ class LoginViewModel @Inject constructor(
 
         useCase.login(phone, password).onEach {
             it.onSuccess {
-                openMainScreenLiveData.value = Unit
+//                openMainScreenLiveData.value = Unit
+                appNavigator.navigateTo(LoginScreenDirections.actionLoginScreenToMainScreen())
             }
             it.onFailure { e->
                 Log.d("TTT",e.message?:"")

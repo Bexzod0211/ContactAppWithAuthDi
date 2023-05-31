@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-    private val baseUrl = "http://c3d2-95-214-211-153.ngrok-free.app"
+    private val baseUrl = "http://5a4e-185-139-137-116.ngrok-free.app"
 
 
     @Provides

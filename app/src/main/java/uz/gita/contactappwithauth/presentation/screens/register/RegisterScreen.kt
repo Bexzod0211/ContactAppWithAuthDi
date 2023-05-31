@@ -21,7 +21,7 @@ class RegisterScreen : Fragment(R.layout.screen_register) {
     private val binding by viewBinding(ScreenRegisterBinding::bind)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.openVerifyScreenLiveData.observe(this,openVerifyScreenObserver)
+//        viewModel.openVerifyScreenLiveData.observe(this,openVerifyScreenObserver)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {

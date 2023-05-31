@@ -14,16 +14,19 @@ import retrofit2.Response
 import uz.gita.contactappwithauth.data.source.remote.request.VerifyRequest
 import uz.gita.contactappwithauth.data.source.remote.response.MessageResponse
 import uz.gita.contactappwithauth.data.source.remote.response.VerifyResponse
+import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.screens.verify.VerifyScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.VerifyUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class VerifyViewModel @Inject constructor(
-    private val useCase:VerifyUseCase
+    private val useCase:VerifyUseCase,
+    private val appNavigator:AppNavigator
 ) : ViewModel() {
     val btnSubmitEnablingLiveData = MutableLiveData<Boolean>()
     val progressBarLiveData = MutableLiveData<Boolean>()
-    val openMainScreenLiveData = MutableLiveData<Unit>()
+//    val openMainScreenLiveData = MutableLiveData<Unit>()
     val errorLiveData = MutableLiveData<String>()
 
     fun onTextChanged(code: String) {
@@ -39,7 +42,8 @@ class VerifyViewModel @Inject constructor(
             it.onSuccess { response ->
                 useCase.saveToken(response.token)
                 useCase.saveLoginState(true)
-                openMainScreenLiveData.value = Unit
+//                openMainScreenLiveData.value = Unit
+                appNavigator.navigateTo(VerifyScreenDirections.actionVerifyScreenToMainScreen())
             }
             it.onFailure { e ->
                 Log.d("TTT",e.message?:"")

@@ -1,5 +1,5 @@
 package uz.gita.contactappwithauth.navigation
 
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 
-typealias AppScreen = Fragment
+typealias AppScreen = NavDirections

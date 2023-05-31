@@ -14,18 +14,21 @@ import retrofit2.Response
 import uz.gita.contactappwithauth.data.source.remote.request.RegisterRequest
 import uz.gita.contactappwithauth.data.source.remote.response.MessageResponse
 import uz.gita.contactappwithauth.domain.AppRepository
+import uz.gita.contactappwithauth.navigation.AppNavigator
+import uz.gita.contactappwithauth.presentation.screens.register.RegisterScreenDirections
 import uz.gita.contactappwithauth.presentation.usecase.RegisterUseCase
 import javax.inject.Inject
 
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val useCase: RegisterUseCase
+    private val useCase: RegisterUseCase,
+    private val appNavigator:AppNavigator
 ) : ViewModel() {
     val btnRegisterEnablingStateLiveData = MutableLiveData<Boolean>()
     val toastLiveData = MutableLiveData<String>()
     val progressBarLiveData = MutableLiveData<Boolean>()
-    val openVerifyScreenLiveData = MutableLiveData<String>()
+//    val openVerifyScreenLiveData = MutableLiveData<String>()
 
     fun onTextChanged(firstName:String,lastName:String,phoneNumber:String,password:String,confirmPassword:String){
         btnRegisterEnablingStateLiveData.value = firstName.trim().length in 3..20
@@ -45,7 +48,9 @@ class RegisterViewModel @Inject constructor(
             progressBarLiveData.value = false
             it.onSuccess { m->
                 toastLiveData.value = m.message
-                openVerifyScreenLiveData.value = request.phone
+//                openVerifyScreenLiveData.value = request.phone
+                appNavigator.navigateTo(RegisterScreenDirections.actionRegisterScreenToVerifyScreen(request.phone))
+
             }
             it.onFailure {e->
                 Log.d("TTT",e.message?:"")

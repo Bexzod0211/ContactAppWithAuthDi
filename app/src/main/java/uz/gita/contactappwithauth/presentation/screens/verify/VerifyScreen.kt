@@ -24,7 +24,7 @@ class VerifyScreen : Fragment(R.layout.screen_verify) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.openMainScreenLiveData.observe(this,openMainScreenObserver)
+//        viewModel.openMainScreenLiveData.observe(this,openMainScreenObserver)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
