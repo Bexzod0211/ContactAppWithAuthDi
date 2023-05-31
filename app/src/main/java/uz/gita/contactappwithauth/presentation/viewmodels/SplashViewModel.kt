@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -32,18 +33,18 @@ class SplashViewModel @Inject constructor(
     fun init(){
         viewModelScope.launch {
             delay(2000)
-        }
-        useCase.getLoginState().onEach {
-            Log.d("TTT","it = $$it")
-            if (it) {
+            useCase.getLoginState().collect {
+                Log.d("TTT", "it = $$it")
+                if (it) {
 //                openMainScreenLiveData.value = Unit
-                appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToMainScreen())
-            } else {
+                    appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToMainScreen())
+                } else {
 //                openLoginScreenLiveData.value = Unit
-                myLog("else")
-                appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToLoginScreen())
+                    myLog("else")
+                    appNavigator.navigateTo(SplashScreenDirections.actionSplashScreenToLoginScreen())
+                }
             }
+
         }
-            .launchIn(viewModelScope)
     }
 }
